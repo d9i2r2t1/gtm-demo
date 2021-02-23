@@ -1,0 +1,9 @@
+.asteriskField {
+    color: red;
+}
+
+.vertical-center {
+    min-height: 75vh;
+    max-height: 75vh;
+    align-items: center;
+}

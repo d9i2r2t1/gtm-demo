@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block scripts %}
+    {% include 'inc/_gtm.html' with gtm_id=demo_landing.gtm_id %}
+    <script src="{% static 'gtm_demo/js/demo.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    {% include 'gtm_demo/inc/_welcome_modal.html' with gtm_id=demo_landing.gtm_id %}
+    {% include 'gtm_demo/inc/_navbar.html' with gtm_id=demo_landing.gtm_id %}
+    {% include 'gtm_demo/inc/_carousel.html' %}
+    {% include 'gtm_demo/inc/_features.html' %}
+    {% include 'gtm_demo/inc/_pricing.html' %}
+    {% include 'gtm_demo/inc/_contacts.html' %}
+    {% include 'gtm_demo/inc/_footer.html' %}
+{% endblock %}

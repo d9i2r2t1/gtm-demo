@@ -1,0 +1,96 @@
+- name: Stop and remove existing gtm-demo postgres Docker container
+  docker_container:
+    name: "{{ postgres_container_name }}"
+    state: absent
+    container_default_behavior: compatibility
+
+- name: Remove existing gtm-demo postgres Docker image
+  ignore_errors: yes
+  docker_image:
+    state: absent
+    name: postgres
+    tag: "{{ postgres_image_tag }}"
+
+- name: Create dir for gtm-demo files
+  file:
+    path: "{{ destin_path }}"
+    owner: "{{ ansible_user }}"
+    group: docker
+    state: directory
+    mode: "775"
+
+- name: Copy postgres init scripts dir to server
+  copy:
+    src: "{{ source_path }}/postgres"
+    dest: "{{ destin_path }}"
+    directory_mode: yes
+    mode: "775"
+
+- name: Copy postgres env file to server
+  copy:
+    src: "{{ source_path }}/{{ postgres_env_filename }}"
+    dest: "{{ destin_path }}"
+
+- name: Edit sysctl.conf and OS enviroment
+  command: "{{ item }}"
+  with_items:
+    - sysctl -w kernel.shmmax=4185919488
+    - sysctl -w kernel.shmall=1021953
+    - sysctl -w vm.swappiness=0
+    - sysctl -w vm.overcommit_memory=2
+    - sysctl -p
+    - hdparm -W 0 /dev/sda
+    - blockdev --setra 4096 /dev/sda
+
+- name: Remount server
+  mount:
+    path: /
+    state: remounted
+
+- name: Create volume mounting dir for PostgreSQL
+  file:
+    path: "{{ destin_path }}/postgres_data"
+    state: directory
+    mode: "775"
+
+- name: Create Docker network for gtm-demo
+  docker_network:
+    name: gtm-demo
+
+- name: Install Postgres
+  docker_container:
+    name: "{{ postgres_container_name }}"
+    image: "postgres:{{ postgres_image_tag }}"
+    container_default_behavior: compatibility
+    interactive: true
+    tty: true
+    restart_policy: always
+    expose:
+      - 5432
+    env_file: "{{ destin_path }}/{{ postgres_env_filename }}"
+    volumes:
+      - "{{ destin_path }}/postgres_data:/var/lib/postgresql/data"
+      - "{{ destin_path }}/postgres:/docker-entrypoint-initdb.d"
+    command: >
+      postgres
+      -c listen_addresses=*
+      -c shared_buffers={{ ansible_memtotal_mb * postgres_shared_buffers_ratio }}MB
+      -c fsync=off
+      -c wal_buffers=16MB
+      -c max_wal_size=6144MB
+      -c checkpoint_timeout=20min
+      -c checkpoint_completion_target=0.9
+      -c work_mem=256MB
+      -c maintenance_work_mem=384MB
+      -c effective_cache_size=4GB
+      -c vm.overcommit_ratio=100
+      -c temp_buffers=32MB
+    networks:
+      - name: gtm-demo
+    purge_networks: yes
+    networks_cli_compatible: no
+
+- name: Remove postgres env file from server
+  file:
+    path: "{{ destin_path }}/{{ postgres_env_filename }}"
+    state: absent

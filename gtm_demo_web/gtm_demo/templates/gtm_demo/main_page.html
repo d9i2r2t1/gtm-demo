@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% load gtm_demo_extras %}
+
+{% block scripts %}
+    {% include 'inc/_gtm.html' with gtm_id='GTM-K4NSMP7' %}
+
+    <script src="{% static 'gtm_demo/js/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'gtm_demo/css/style.css' %}">
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+
+{% block body %}
+    <header>
+        <h1 class="my-3 text-center font-weight-light">GTM Demo Landings</h1>
+        <p class="mb-3 text-center font-weight-light text-secondary">Создай свой демо-лендинг с установленным
+            контейнером Google Tag Manager</p>
+    </header>
+
+    <div class="d-flex flex-column justify-content-center vertical-center">
+        <div id="creation-form-block" style="width: 302px">
+            {% crispy form %}
+            {% if messages %}
+                {% for message in messages %}
+                    <small class="text-danger"><b>{{ message }}</b></small>
+                {% endfor %}
+            {% endif %}
+            <button type="submit" class="btn btn-primary btn-block mt-1" form="{{ form.helper.form_id }}" value="Submit"
+                    id="create_demo_landing_button">Создать демо-лендинг
+            </button>
+        </div>
+    </div>
+
+    <div class="fixed-bottom">
+        <p class="text-secondary text-center ">Всего создано демо-лендингов: {% get_landings_count %}</p>
+        <footer class="bg-light">
+            <div class="row text-center">
+                <div class="col-sm-4"></div>
+                <div class="text-center text-secondary py-3 col-sm-4">{% now 'Y' %} | Created by
+                    <a href="https://www.facebook.com/oleg.dirtrider/" target="_blank">Oleg Denisov</a>
+                </div>
+                <div class="text-right text-secondary py-3 col-sm-4">Contributing on
+                    <a class="mr-3" href="https://github.com/oleg-dirtrider/gtm-demo/" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+{% endblock %}

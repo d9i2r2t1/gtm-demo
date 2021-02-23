@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  gtm_demo_postgres:
+    image: postgres:latest
+    expose:
+      - 5432
+    env_file:
+      - ./deploy/.env.prod.postgres
+    restart: always
+    volumes:
+      - ./deploy/postgres:/docker-entrypoint-initdb.d
+    command: >
+      postgres
+      -c listen_addresses=*
+      -c shared_buffers=4000MB
+      -c fsync=off
+      -c wal_buffers=16MB
+      -c max_wal_size=6144MB
+      -c checkpoint_timeout=20min
+      -c checkpoint_completion_target=0.9
+      -c work_mem=256MB
+      -c maintenance_work_mem=384MB
+      -c effective_cache_size=4GB
+      -c vm.overcommit_ratio=100
+      -c temp_buffers=32MB
+
+  gtm_demo_pgbouncer:
+    image: edoburu/pgbouncer:1.15.0
+    expose:
+      - 5432
+    env_file:
+      - ./deploy/.env.prod.pgbouncer
+    restart: always
+    depends_on:
+      - gtm_demo_postgres
+
+  gtm_demo_web:
+    build: .
+    command: sh -c "python manage.py create_postgres_db &&
+                    python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py collectstatic --noinput &&
+                    python manage.py init_superuser &&
+                    gunicorn configs.wsgi:application --bind 0.0.0.0:8000"
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/home/gtm_demo/web/static
+    env_file:
+      - ./deploy/.env.prod
+    restart: always
+    depends_on:
+      - gtm_demo_pgbouncer
+
+  gtm_demo_nginx:
+    image: nginx
+    volumes:
+      - static_volume:/home/gtm_demo/web/static
+      - ./deploy/nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - gtm_demo_web
+
+volumes:
+  static_volume:

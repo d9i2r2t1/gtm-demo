@@ -1,0 +1,26 @@
+# IDE
+/.idea/
+
+# venv
+/venv/
+
+# APP
+/gtm_demo_web/__pycache__/
+/gtm_demo_web/configs/__pycache__/
+/gtm_demo_web/logs/*.log
+run_local.sh
+
+# gtm_demo
+/gtm_demo_web/gtm_demo/__pycache__/
+/gtm_demo_web/gtm_demo/migrations/__pycache__/
+/gtm_demo_web/gtm_demo/management/__pycache__/
+/gtm_demo_web/gtm_demo/management/commands/__pycache__/
+/gtm_demo_web/gtm_demo/templatetags/__pycache__/
+
+# deploy
+/deploy/ansible/ansible.log
+/deploy/.env.prod
+/deploy/.env.prod.pgbouncer
+/deploy/.env.prod.postgres
+/deploy/ansible/group_vars/DIRTSERVER.yml
+/deploy/ansible/hosts.ini

@@ -1,0 +1,3 @@
+---
+source_path: "{{ playbook_dir }}/../"
+destin_path: "/home/{{ ansible_user }}/gtm-demo"

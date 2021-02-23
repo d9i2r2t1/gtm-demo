@@ -1,0 +1,30 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="contact-us">
+    <hr class="mb-5">
+    <h2 class="display-4">Свяжитесь с нами</h2>
+    <p class="lead">Эта форма имитирует отправку без перезагрузки страницы.</p>
+</div>
+<div class="container">
+    <form id="contacts-form" style="width: 50%" class="mx-auto" action="#">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="contacts-form-name-field">Как вас зовут?</label>
+            <input class="form-control" id="contacts-form-name-field" required>
+        </div>
+        <div class="form-group">
+            <label for="contacts-form-email-field">Email-адрес для связи:</label>
+            <input type="email" class="form-control" id="contacts-form-email-field" placeholder="name@example.com"
+                   required>
+            <small class="form-text text-muted">Данные не собираются: отправка формы не обрабатывается.</small>
+        </div>
+        <div class="form-group">
+            <label for="contacts-form-textarea-field">Текст сообщения:</label>
+            <textarea class="form-control" id="contacts-form-textarea-field" rows="5" required></textarea>
+        </div>
+        <div class="col text-center">
+            <button type="submit" class="btn btn-primary" form="contacts-form" id="contacts-form-submit-button"
+                    style="width: 200px">Отправить
+            </button>
+            <div class="valid-feedback">Сообщение отправлено. Мы вам обязательно ответим!</div>
+        </div>
+    </form>
+</div>

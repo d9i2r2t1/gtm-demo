@@ -1,0 +1,64 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" id="pricing">
+    <h2 class="display-4">Стоимость</h2>
+    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod
+        semper.</p>
+</div>
+<div class="container">
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Базовая</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">199₽ <small class="text-muted">/ месяц</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>10 пользователей включено</li>
+                    <li>2 GB хранилище</li>
+                    <li>Поддержка по email</li>
+                    <li>Доступ к базе знаний</li>
+                </ul>
+                <button type="button" class="btn btn-lg btn-block btn-outline-success buy-button" data-toggle="modal"
+                        data-target="#buy-base-modal" id="buy-base-button" product="Базовая подписка">Купить
+                </button>
+            </div>
+        </div>
+        {% include 'gtm_demo/inc/_pricing_modal.html' with modal_id="buy-base-modal" subscription_type="Базовая" price="199" %}
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Расширенная</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">499₽ <small class="text-muted">/ месяц</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>20 пользователей включено</li>
+                    <li>10 GB хранилище</li>
+                    <li>Приоритетная поддержка по email</li>
+                    <li>Доступ к базе знаний</li>
+                </ul>
+                <button type="button" class="btn btn-lg btn-block btn-success buy-button" data-toggle="modal"
+                        data-target="#buy-extend-modal" id="buy-extend-button" product="Расширенная подписка">
+                    Купить
+                </button>
+            </div>
+        </div>
+        {% include 'gtm_demo/inc/_pricing_modal.html' with modal_id="buy-extend-modal" subscription_type="Расширенная" price="499" %}
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Профессиональная</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">999₽ <small class="text-muted">/ месяц</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>30 пользователей включено</li>
+                    <li>15 GB хранилище</li>
+                    <li>Поддержка по email и телефону</li>
+                    <li>Доступ к базе знаний</li>
+                </ul>
+                <button type="button" class="btn btn-lg btn-block btn-success buy-button" data-toggle="modal"
+                        data-target="#buy-pro-modal" id="buy-pro-button" product="Профессиональная подписка">Купить
+                </button>
+            </div>
+        </div>
+        {% include 'gtm_demo/inc/_pricing_modal.html' with modal_id="buy-pro-modal" subscription_type="Профессиональная" price="999" %}
+    </div>
+</div>

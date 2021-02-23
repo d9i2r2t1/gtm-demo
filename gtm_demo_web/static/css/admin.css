@@ -1,0 +1,38 @@
+#header, .module h2, .module caption, .inline-group h2, .selector-chosen h2 {
+    background: #90a4ae;
+    color: #fff;
+}
+
+.selector-chosen h2 {
+    background: #90a4ae !important;
+    color: #fff !important;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #fff;
+}
+
+div.breadcrumbs {
+    background: #263238;
+}
+
+.button, input[type="submit"], input[type="button"], .submit-row input, a.button {
+    background: #90a4ae;
+}
+
+.button.default, input[type="submit"].default, .submit-row input.default {
+    background: #546e7a;
+}
+
+#nav-sidebar .current-model {
+    background: #cfd8dc;
+}
+
+#nav-sidebar .current-app .section:link, #nav-sidebar .current-app .section:visited {
+    color: #fff;
+    font-weight: bold;
+}
+
+ #changelist table tbody tr.selected {
+     background-color: #e0e0e0 !important;
+ }
