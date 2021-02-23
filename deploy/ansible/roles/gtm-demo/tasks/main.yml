@@ -1,6 +1,11 @@
+- name: Log into DockerHub
+  docker_login:
+    username: "{{ dockerhub_login }}"
+    password: "{{ dockerhub_pass }}"
+
 - name: Stop and remove existing web Docker container
   docker_container:
-    name: "{{ gtm-demo_container_name }}"
+    name: "{{ gtm_demo_container_name }}"
     state: absent
     container_default_behavior: compatibility
 
@@ -8,7 +13,7 @@
   docker_image:
     state: absent
     name: dirtrider/gtm-demo
-    tag: "{{ gtm-demo_image_tag }}"
+    tag: "{{ gtm_demo_image_tag }}"
 
 - name: Stop and remove existing nginx Docker container
   docker_container:
@@ -36,7 +41,7 @@
     name: edoburu/pgbouncer
     tag: "{{ pgbouncer_image_tag }}"
 
-- name: Create dir for gtm-demo files
+- name: Create dir for gtm_demo files
   file:
     path: "{{ destin_path }}"
     owner: "{{ ansible_user }}"
@@ -49,14 +54,14 @@
     src: "{{ source_path }}/{{ item }}"
     dest: "{{ destin_path }}"
   loop:
-    - "{{ gtm-demo_env_filename }}"
+    - "{{ gtm_demo_env_filename }}"
     - "{{ pgbouncer_env_filename }}"
 
-- name: Create volume mounting dir for gtm-demo logs
+- name: Create volume mounting dir for gtm_demo logs
   file:
     path: "{{ destin_path }}/logs"
     state: directory
-    mode: "775"
+    mode: "777"
 
 - name: Copy nginx configs dir to server
   copy:
@@ -65,9 +70,9 @@
     directory_mode: yes
     mode: "775"
 
-- name: Create Docker network for gtm-demo
+- name: Create Docker network for gtm_demo
   docker_network:
-    name: gtm-demo
+    name: gtm_demo
 
 - name: Install PgBouncer
   docker_container:
@@ -78,27 +83,27 @@
     tty: true
     restart_policy: always
     expose:
-      - 5432
+      - "5432"
     env_file: "{{ destin_path }}/{{ pgbouncer_env_filename }}"
     networks:
-      - name: gtm-demo
+      - name: gtm_demo
     purge_networks: yes
     networks_cli_compatible: no
 
 - name: Install app
   docker_container:
-    name: "{{ gtm-demo_container_name }}"
-    image: "dirtrider/gtm-demo:{{ gtm-demo_image_tag }}"
+    name: "{{ gtm_demo_container_name }}"
+    image: "dirtrider/gtm-demo:{{ gtm_demo_image_tag }}"
     container_default_behavior: compatibility
     interactive: true
     tty: true
     restart_policy: always
     expose:
-      - 8000
+      - "8000"
     volumes:
       - "static_volume:/home/gtm_demo/web/static"
       - "{{ destin_path }}/logs:/home/gtm_demo/web/logs"
-    env_file: "{{ destin_path }}/{{ gtm-demo_env_filename }}"
+    env_file: "{{ destin_path }}/{{ gtm_demo_env_filename }}"
     command: sh -c "python manage.py create_postgres_db &&
                     python manage.py makemigrations &&
                     python manage.py migrate &&
@@ -106,7 +111,7 @@
                     python manage.py init_superuser &&
                     gunicorn configs.wsgi:application --bind 0.0.0.0:8000"
     networks:
-      - name: gtm-demo
+      - name: gtm_demo
     purge_networks: yes
     networks_cli_compatible: no
 
@@ -121,10 +126,10 @@
     volumes:
       - "static_volume:/home/gtm_demo/web/static"
       - "{{ destin_path }}/nginx:/etc/nginx/conf.d"
-    ports:
-      - 80:80
+    expose:
+      - "80"
     networks:
-      - name: gtm-demo
+      - name: gtm_demo
     purge_networks: yes
     networks_cli_compatible: no
 
@@ -133,5 +138,5 @@
     path: "{{ item }}"
     state: absent
   loop:
-    - "{{ destin_path }}/{{ gtm-demo_env_filename }}"
+    - "{{ destin_path }}/{{ gtm_demo_env_filename }}"
     - "{{ destin_path }}/{{ pgbouncer_env_filename }}"

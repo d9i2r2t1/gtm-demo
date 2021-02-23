@@ -1,17 +1,17 @@
-- name: Stop and remove existing gtm-demo postgres Docker container
+- name: Stop and remove existing gtm_demo postgres Docker container
   docker_container:
     name: "{{ postgres_container_name }}"
     state: absent
     container_default_behavior: compatibility
 
-- name: Remove existing gtm-demo postgres Docker image
+- name: Remove existing gtm_demo postgres Docker image
   ignore_errors: yes
   docker_image:
     state: absent
     name: postgres
     tag: "{{ postgres_image_tag }}"
 
-- name: Create dir for gtm-demo files
+- name: Create dir for gtm_demo files
   file:
     path: "{{ destin_path }}"
     owner: "{{ ansible_user }}"
@@ -24,7 +24,7 @@
     src: "{{ source_path }}/postgres"
     dest: "{{ destin_path }}"
     directory_mode: yes
-    mode: "775"
+    mode: "777"
 
 - name: Copy postgres env file to server
   copy:
@@ -53,9 +53,9 @@
     state: directory
     mode: "775"
 
-- name: Create Docker network for gtm-demo
+- name: Create Docker network for gtm_demo
   docker_network:
-    name: gtm-demo
+    name: gtm_demo
 
 - name: Install Postgres
   docker_container:
@@ -66,7 +66,7 @@
     tty: true
     restart_policy: always
     expose:
-      - 5432
+      - "5432"
     env_file: "{{ destin_path }}/{{ postgres_env_filename }}"
     volumes:
       - "{{ destin_path }}/postgres_data:/var/lib/postgresql/data"
@@ -74,7 +74,7 @@
     command: >
       postgres
       -c listen_addresses=*
-      -c shared_buffers={{ ansible_memtotal_mb * postgres_shared_buffers_ratio }}MB
+      -c shared_buffers={{ ansible_memtotal_mb * 0.25 }}MB
       -c fsync=off
       -c wal_buffers=16MB
       -c max_wal_size=6144MB
@@ -86,7 +86,7 @@
       -c vm.overcommit_ratio=100
       -c temp_buffers=32MB
     networks:
-      - name: gtm-demo
+      - name: gtm_demo
     purge_networks: yes
     networks_cli_compatible: no
 
