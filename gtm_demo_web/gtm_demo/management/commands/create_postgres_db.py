@@ -18,7 +18,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         db_name = options.get('db_name') or os.getenv('DJANGO_DB_NAME')
         db_user = options.get('db_user') or os.getenv('DJANGO_DB_USER')
-        db_password = options.get('db_password') or os.getenv('DJANGO_DB_PASSWORD')
+        db_password = options.get('db_password') or os.getenv(
+            'DJANGO_DB_PASSWORD'
+        )
         db_host = options.get('db_host') or os.getenv('DJANGO_DB_HOST')
         db_port = options.get('db_port') or os.getenv('DJANGO_DB_PORT')
 
@@ -37,13 +39,23 @@ class Command(BaseCommand):
                     time.sleep(0.1)
 
         try:
-            psycopg2.connect(dbname=db_name, host=db_host, port=db_port, user=db_user, password=db_password).close()
+            psycopg2.connect(dbname=db_name,
+                             host=db_host,
+                             port=db_port,
+                             user=db_user,
+                             password=db_password).close()
         except psycopg2.OperationalError:  # Если нужной БД не существует
-            conn = psycopg2.connect(dbname='postgres', host=db_host, port=db_port, user=db_user, password=db_password)
+            conn = psycopg2.connect(dbname='postgres',
+                                    host=db_host,
+                                    port=db_port,
+                                    user=db_user,
+                                    password=db_password)
             conn.autocommit = True
             with conn.cursor() as cur:
                 cur.execute(f'CREATE DATABASE {db_name} OWNER {db_user}')
-                cur.execute(f'REVOKE CONNECT ON DATABASE {db_name} FROM PUBLIC')
+                cur.execute(
+                    f'REVOKE CONNECT ON DATABASE {db_name} FROM PUBLIC'
+                )
             conn.close()
             wait_for_db_creation()
             print(f'Database "{db_name}" created')

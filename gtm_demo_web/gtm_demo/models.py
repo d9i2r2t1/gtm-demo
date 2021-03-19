@@ -9,7 +9,10 @@ from django.db import models
 def validate_gtm_id(gtm_id: str) -> None:
     gtm_id = gtm_id.upper().strip()
     if not re.match(r'^GTM-[A-Z0-9]{1,7}$', gtm_id):
-        raise ValidationError('Неверный идентификатор контейнера GTM. Он должен быть вида "GTM-XXXXXXX".')
+        raise ValidationError(
+            'Неверный идентификатор контейнера GTM. '
+            'Он должен быть вида "GTM-XXXXXXX".'
+        )
 
 
 class DemoLanding(models.Model):
@@ -49,4 +52,6 @@ class DemoLanding(models.Model):
         """Получи хэш лендинга."""
         fields_for_hash = [self.gtm_id]
         prehash = hashlib.md5(''.join(fields_for_hash).encode()).hexdigest()
-        return base64.b64encode(prehash.encode('ascii')).decode('utf-8').lower()[:8]
+        return base64.b64encode(
+            prehash.encode('ascii')
+        ).decode('utf-8').lower()[:8]

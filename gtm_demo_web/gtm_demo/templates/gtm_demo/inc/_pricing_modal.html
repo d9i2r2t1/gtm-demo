@@ -1,62 +1,91 @@
-<div class="modal fade" id="{{ modal_id }}" data-backdrop="static" data-keyboard="false" tabindex="-1"
+<div class="modal fade" id="{{ modal_id }}" data-backdrop="static"
+     data-keyboard="false" tabindex="-1"
      aria-labelledby="{{ modal_id }}-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{ modal_id }}-label">{{ subscription_type }} подписка</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title"
+                    id="{{ modal_id }}-label">{{ subscription_type }}
+                    подписка</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="{{ modal_id }}-body">
-                <form id="{{ modal_id }}-form" style="width: 90%" class="mx-auto buy-subscription-form"
-                      product="{{ subscription_type }}" price="{{ price }}" action="#">
+                <form id="{{ modal_id }}-form" style="width: 90%"
+                      class="mx-auto buy-subscription-form"
+                      product="{{ subscription_type }}" price="{{ price }}"
+                      action="#">
                     {% csrf_token %}
                     <div class="form-group text-left">
-                        <label for="{{ modal_id }}-form-name-field">Имя и фамилия:</label>
-                        <input class="form-control" id="{{ modal_id }}-form-name-field" placeholder="Иван Иванов"
+                        <label for="{{ modal_id }}-form-name-field">Имя и
+                            фамилия:</label>
+                        <input class="form-control"
+                               id="{{ modal_id }}-form-name-field"
+                               placeholder="Иван Иванов"
                                required>
-                        <small class="form-text text-muted">Данные не собираются: отправка формы не
+                        <small class="form-text text-muted">Данные не
+                            собираются: отправка формы не
                             обрабатывается.</small>
                     </div>
                     <div class="form-group text-left">
                         <label for="{{ modal_id }}-form-email-field">Email:</label>
-                        <input type="email" class="form-control buy-form-email-field"
+                        <input type="email"
+                               class="form-control buy-form-email-field"
                                id="{{ modal_id }}-form-email-field"
                                placeholder="name@example.com" required>
-                        <small class="form-text text-muted">Данные не собираются: отправка формы не
+                        <small class="form-text text-muted">Данные не
+                            собираются: отправка формы не
                             обрабатывается.</small>
                     </div>
                     <div class="form-group text-left">
                         <label for="{{ modal_id }}-form-phone-field">Телефон:</label>
-                        <input type="tel" class="form-control buy-form-tel-field" id="{{ modal_id }}-form-phone-field"
+                        <input type="tel"
+                               class="form-control buy-form-tel-field"
+                               id="{{ modal_id }}-form-phone-field"
                                placeholder="+79999999999" required>
-                        <small class="form-text text-muted">Данные не собираются: отправка формы не
+                        <small class="form-text text-muted">Данные не
+                            собираются: отправка формы не
                             обрабатывается.</small>
-                        <div class="invalid-feedback">Некорректный номер телефона.</div>
+                        <div class="invalid-feedback">Некорректный номер
+                            телефона.
+                        </div>
                     </div>
                     <div class="form-group text-left">
-                        <label for="{{ modal_id }}-form-card-field">Номер карты:</label>
-                        <input type="tel" class="form-control buy-form-card-field" id="{{ modal_id }}-form-card-field"
+                        <label for="{{ modal_id }}-form-card-field">Номер
+                            карты:</label>
+                        <input type="tel"
+                               class="form-control buy-form-card-field"
+                               id="{{ modal_id }}-form-card-field"
                                placeholder="1111222233334444" required>
-                        <small class="form-text text-muted">Данные не собираются: отправка формы не
+                        <small class="form-text text-muted">Данные не
+                            собираются: отправка формы не
                             обрабатывается.</small>
-                        <div class="invalid-feedback">Некорректный номер карты. Введите число из 4-16 цифр.</div>
+                        <div class="invalid-feedback">Некорректный номер карты.
+                            Введите число из 4-16 цифр.
+                        </div>
                     </div>
                     <div class="form-group form-check text-left">
-                        <input type="checkbox" class="form-check-input buy-form-data-field"
+                        <input type="checkbox"
+                               class="form-check-input buy-form-data-field"
                                id="{{ modal_id }}-form-data-field">
                         <label class="form-check-label"
-                               for="{{ modal_id }}-form-data-field">Согласен на обработку персональных данных.
+                               for="{{ modal_id }}-form-data-field">Согласен на
+                            обработку персональных данных.
                         </label>
-                        <small class="form-text text-muted">Данные не собираются: отправка формы не
+                        <small class="form-text text-muted">Данные не
+                            собираются: отправка формы не
                             обрабатывается.</small>
-                        <div class="invalid-feedback">Необходимо дать согласие на обработку персональных данных.</div>
+                        <div class="invalid-feedback">Необходимо дать согласие
+                            на обработку персональных данных.
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer align-self-center">
-                <button type="submit" class="btn btn-success btn-lg" style="width: 250px"
+                <button type="submit" class="btn btn-success btn-lg"
+                        style="width: 250px"
                         form="{{ modal_id }}-form">Купить за {{ price }}₽
                 </button>
             </div>

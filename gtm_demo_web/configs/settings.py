@@ -25,7 +25,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'standard': {
-            'format': '%(asctime)s | %(levelname)-8s | [%(threadName)s - %(thread)d] | '
+            'format': '%(asctime)s | %(levelname)-8s | '
+                      '[%(threadName)s - %(thread)d] | '
                       '%(name)s:%(funcName)s:%(lineno)d – %(message)s'
         },
     },

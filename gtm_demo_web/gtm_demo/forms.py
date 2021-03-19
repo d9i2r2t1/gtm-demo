@@ -22,7 +22,8 @@ class GtmDemoLandingCreationForm(forms.ModelForm):
                 'data-toggle': 'tooltip',
                 'data-placement': 'right',
                 'title': 'Идентификатор должен быть вида "GTM-XXXXXXX". '
-                         'Найти его можно вверху страницы созданного контейнера.',
+                         'Найти его можно вверху страницы созданного '
+                         'контейнера.',
             })
         }
 
@@ -35,5 +36,6 @@ class GtmDemoLandingCreationForm(forms.ModelForm):
             'gtm_id',
             HTML(
                 f'<div class="form-group"><div class="g-recaptcha" '
-                f'data-sitekey="{settings.GOOGLE_RECAPTCHA_SITE_KEY}"></div></div>'),
+                f'data-sitekey="{settings.GOOGLE_RECAPTCHA_SITE_KEY}">'
+                f'</div></div>'),
         )

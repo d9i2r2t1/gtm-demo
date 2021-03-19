@@ -16,7 +16,10 @@ def check_recaptcha(func):
                 'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
                 'response': request.POST.get('g-recaptcha-response')
             }
-            response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data).json()
+            response = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                data=data
+            ).json()
             if response['success']:
                 request.recaptcha_is_valid = True
             else:

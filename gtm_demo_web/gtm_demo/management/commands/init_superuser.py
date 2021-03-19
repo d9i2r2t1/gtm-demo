@@ -14,8 +14,16 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         user = get_user_model()
-        username = options.get('username') or os.getenv('DJANGO_SUPERUSER_USERNAME')
-        email = options.get('email') or os.getenv('DJANGO_SUPERUSER_EMAIL')
-        password = options.get('password') or os.getenv('DJANGO_SUPERUSER_PASSWORD')
+        username = options.get('username') or os.getenv(
+            'DJANGO_SUPERUSER_USERNAME'
+        )
+        email = options.get('email') or os.getenv(
+            'DJANGO_SUPERUSER_EMAIL'
+        )
+        password = options.get('password') or os.getenv(
+            'DJANGO_SUPERUSER_PASSWORD'
+        )
         if not user.objects.filter(username=username).exists():
-            user.objects.create_superuser(username=username, email=email, password=password)
+            user.objects.create_superuser(username=username,
+                                          email=email,
+                                          password=password)
