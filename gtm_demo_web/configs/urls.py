@@ -21,7 +21,7 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(
         template_name='robots.txt',
         content_type='text/plain'
-    )),  # noqa
+    )),
     path('admin/', admin.site.urls),
     path('', include('gtm_demo.urls', namespace='gtm_demo')),
 ]
