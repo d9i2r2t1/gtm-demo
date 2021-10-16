@@ -109,7 +109,7 @@
                     python manage.py migrate &&
                     python manage.py collectstatic --noinput &&
                     python manage.py init_superuser &&
-                    gunicorn configs.wsgi:application --bind 0.0.0.0:8000"
+                    gunicorn configs.wsgi:application -w {{ ansible_processor_vcpus * 2 + 1 }} --bind 0.0.0.0:8000"
     networks:
       - name: gtm_demo
     purge_networks: yes
