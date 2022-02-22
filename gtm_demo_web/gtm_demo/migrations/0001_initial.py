@@ -8,21 +8,48 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='DemoLanding',
+            name="DemoLanding",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('gtm_id', models.CharField(max_length=15, validators=[gtm_demo.models.validate_gtm_id], verbose_name='ID контейнера GTM')),
-                ('hashcode', models.SlugField(editable=False, max_length=8, unique=True, verbose_name='Хэш-код')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата создания')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "gtm_id",
+                    models.CharField(
+                        max_length=15,
+                        validators=[gtm_demo.models.validate_gtm_id],
+                        verbose_name="ID контейнера GTM",
+                    ),
+                ),
+                (
+                    "hashcode",
+                    models.SlugField(
+                        editable=False,
+                        max_length=8,
+                        unique=True,
+                        verbose_name="Хэш-код",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="дата создания"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'демо-лендинг',
-                'verbose_name_plural': 'демо-лендинги',
+                "verbose_name": "демо-лендинг",
+                "verbose_name_plural": "демо-лендинги",
             },
         ),
     ]

@@ -7,13 +7,18 @@ import gtm_demo.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gtm_demo', '0001_initial'),
+        ("gtm_demo", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='demolanding',
-            name='gtm_id',
-            field=models.CharField(db_index=True, max_length=15, validators=[gtm_demo.models.validate_gtm_id], verbose_name='ID контейнера GTM'),
+            model_name="demolanding",
+            name="gtm_id",
+            field=models.CharField(
+                db_index=True,
+                max_length=15,
+                validators=[gtm_demo.models.validate_gtm_id],
+                verbose_name="ID контейнера GTM",
+            ),
         ),
     ]

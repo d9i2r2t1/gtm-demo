@@ -10,6 +10,6 @@ def get_landings_count():
     return DemoLanding.objects.count()
 
 
-@register.filter(name='get')
+@register.filter(name="get")
 def get(dictionary, key):
     return dictionary.get(key, None)

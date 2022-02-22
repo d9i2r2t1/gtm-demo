@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 CSRF_TRUSTED_ORIGINS = ["https://gtm-demo.ga", "https://www.gtm-demo.ga"]
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,139 +22,139 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Logging
 
-LOG_LEVEL = os.getenv('DJANGO_LOG_LEVEL')
+LOG_LEVEL = os.getenv("DJANGO_LOG_LEVEL")
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'standard': {
-            'format': '%(asctime)s | %(levelname)-8s | '
-                      '[%(threadName)s - %(thread)d] | '
-                      '%(name)s:%(funcName)s:%(lineno)d – %(message)s'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s | %(levelname)-8s | "
+            "[%(threadName)s - %(thread)d] | "
+            "%(name)s:%(funcName)s:%(lineno)d – %(message)s"
         },
     },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
+    "handlers": {
+        "null": {
+            "level": "DEBUG",
+            "class": "logging.NullHandler",
         },
-        'logfile': {
-            'level': LOG_LEVEL,
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'gtm-demo.log'),
-            'maxBytes': 10 * 1024 * 1024,  # 10Mb
-            'backupCount': 20,
-            'formatter': 'standard',
+        "logfile": {
+            "level": LOG_LEVEL,
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "gtm-demo.log"),
+            "maxBytes": 10 * 1024 * 1024,  # 10Mb
+            "backupCount": 20,
+            "formatter": "standard",
         },
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'INFO',
-            'formatter': 'standard',
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "standard",
         },
     },
-    'loggers': {
-        'django.security.DisallowedHost': {
-            'handlers': ['null'],
-            'propagate': False,
+    "loggers": {
+        "django.security.DisallowedHost": {
+            "handlers": ["null"],
+            "propagate": False,
         },
-        'django.request': {
-            'handlers': ['logfile'],
-            'level': LOG_LEVEL,
-            'propagate': True,
+        "django.request": {
+            "handlers": ["logfile"],
+            "level": LOG_LEVEL,
+            "propagate": True,
         },
-        'gtm_demo': {
-            'handlers': ['logfile', 'console'],
-            'level': LOG_LEVEL,
-            'propagate': True,
+        "gtm_demo": {
+            "handlers": ["logfile", "console"],
+            "level": LOG_LEVEL,
+            "propagate": True,
         },
-    }
+    },
 }
 
-ADMINS = json.loads(os.getenv('DJANGO_ADMINS', default="[]"))
+ADMINS = json.loads(os.getenv("DJANGO_ADMINS", default="[]"))
 
 
 # Email
 
-EMAIL_HOST = os.getenv('DJANGO_EMAIL_HOST')
-EMAIL_PORT = os.getenv('DJANGO_EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('DJANGO_EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('DJANGO_EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = int(os.getenv('DJANGO_EMAIL_USE_TLS', default=0))
-EMAIL_USE_SSL = int(os.getenv('DJANGO_EMAIL_USE_SSL', default=0))
-SERVER_EMAIL = os.getenv('DJANGO_SERVER_EMAIL')
+EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST")
+EMAIL_PORT = os.getenv("DJANGO_EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("DJANGO_EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = int(os.getenv("DJANGO_EMAIL_USE_TLS", default=0))
+EMAIL_USE_SSL = int(os.getenv("DJANGO_EMAIL_USE_SSL", default=0))
+SERVER_EMAIL = os.getenv("DJANGO_SERVER_EMAIL")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.getenv('DJANGO_DEBUG', default=0))
+DEBUG = int(os.getenv("DJANGO_DEBUG", default=0))
 
-ALLOWED_HOSTS = json.loads(os.getenv('DJANGO_ALLOWED_HOSTS', default="[]"))
+ALLOWED_HOSTS = json.loads(os.getenv("DJANGO_ALLOWED_HOSTS", default="[]"))
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'crispy_forms',
-
-    'gtm_demo.apps.GtmDemoConfig',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "crispy_forms",
+    "corsheaders",
+    "gtm_demo.apps.GtmDemoConfig",
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'configs.urls'
+ROOT_URLCONF = "configs.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'configs.wsgi.application'
+WSGI_APPLICATION = "configs.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DJANGO_DB_ENGINE'),
-        'NAME': os.getenv('DJANGO_DB_NAME'),
-        'USER': os.getenv('DJANGO_DB_USER'),
-        'PASSWORD': os.getenv('DJANGO_DB_PASSWORD'),
-        'HOST': os.getenv('DJANGO_DB_HOST'),
-        'PORT': os.getenv('DJANGO_DB_PORT'),
+    "default": {
+        "ENGINE": os.getenv("DJANGO_DB_ENGINE"),
+        "NAME": os.getenv("DJANGO_DB_NAME"),
+        "USER": os.getenv("DJANGO_DB_USER"),
+        "PASSWORD": os.getenv("DJANGO_DB_PASSWORD"),
+        "HOST": os.getenv("DJANGO_DB_HOST"),
+        "PORT": os.getenv("DJANGO_DB_PORT"),
     }
 }
 
@@ -163,16 +164,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -180,9 +181,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = "ru"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -194,12 +195,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'configs/static'),
-    os.path.join(BASE_DIR, 'gtm_demo/static'),
+    os.path.join(BASE_DIR, "configs/static"),
+    os.path.join(BASE_DIR, "gtm_demo/static"),
 ]
 
-GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv('GOOGLE_RECAPTCHA_SECRET_KEY')
-GOOGLE_RECAPTCHA_SITE_KEY = os.getenv('GOOGLE_RECAPTCHA_SITE_KEY')
+GOOGLE_RECAPTCHA_SECRET_KEY = os.getenv("GOOGLE_RECAPTCHA_SECRET_KEY")
+GOOGLE_RECAPTCHA_SITE_KEY = os.getenv("GOOGLE_RECAPTCHA_SITE_KEY")
