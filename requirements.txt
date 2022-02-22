@@ -1,4 +1,4 @@
-django~=4.0.2
+django~=3.2.12
 django-crispy-forms~=1.14.0
 psycopg2~=2.9.3
 requests~=2.27.1
