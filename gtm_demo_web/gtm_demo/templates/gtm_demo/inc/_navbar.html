@@ -47,10 +47,10 @@
                         <td>Яндекс.Метрика</td>
                         <td>{{ request.COOKIES|get:'_ym_uid'|default:'-' }}</td>
                     </tr>
-                    <tr>
-                        <td>Facebook Pixel</td>
-                        <td>{{ request.COOKIES|get:'_fbp'|default:'-' }}</td>
-                    </tr>
+{#                    <tr>#}
+{#                        <td>Facebook Pixel</td>#}
+{#                        <td>{{ request.COOKIES|get:'_fbp'|default:'-' }}</td>#}
+{#                    </tr>#}
                     </tbody>
                 </table>
             </div>
